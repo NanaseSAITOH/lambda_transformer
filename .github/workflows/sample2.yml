@@ -9,7 +9,7 @@ name: Auto Deploy to AWS Lambda2
 
 jobs:
   deploy:
-    name: Auto Deploy
+    name: Auto Deploy2
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@master
