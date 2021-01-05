@@ -1,0 +1,24 @@
+service: auto-deploy-lambda
+provider:
+  name: aws
+  runtime: python3.7
+  region: us-east-2
+  role: ${env:AWS_LAMBDA_ROLE_ARN}
+  stage: prod
+
+  environment:
+    SLACK_WEBHOOK: ${env:SLACK_WEBHOOK}
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    slim: true
+
+package:
+  individually: true
+
+functions:
+  slack:
+    handler: src/index.post
+    description: "Post message to Slack"
+    timeout: 60
