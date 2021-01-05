@@ -11,9 +11,3 @@ package:
   exclude:
     - Dockerfile
     - docker-compose.yml
-
-functions:
-  slack:
-    handler: src/index.post
-    description: "Post message to Slack"
-    timeout: 60
