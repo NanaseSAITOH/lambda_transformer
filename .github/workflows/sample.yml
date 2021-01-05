@@ -5,7 +5,7 @@ on:
     branches:
       - master
 
-name: Auto Deploy to AWS Lambda
+name: Auto Deploy to AWS Lambda2
 
 jobs:
   deploy:
@@ -34,7 +34,7 @@ jobs:
           AWS_LAMBDA_ROLE_ARN: ${{ secrets.AWS_LAMBDA_ROLE_ARN }}
           HOGE: ${{secrets.HOGE}}
 
-      - name: Notify result to slack
+      - name: Notify result to slack2
         uses: homoluctus/slatify@master
         if: always()
         with:
