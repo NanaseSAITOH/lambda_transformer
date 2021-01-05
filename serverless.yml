@@ -1,21 +1,18 @@
 service: auto-deploy-lambda
 provider:
   name: aws
-  runtime: python3.7
   region: us-east-2
+  timeout: 120
   role: ${env:AWS_LAMBDA_ROLE_ARN}
   stage: prod
 
   environment:
     SLACK_WEBHOOK: ${env:SLACK_WEBHOOK}
 
-custom:
-  pythonRequirements:
-    dockerizePip: true
-    slim: true
-
 package:
-  individually: true
+  exclude:
+    - Dockerfile
+    - docker-compose.yml
 
 functions:
   slack:
