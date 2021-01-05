@@ -11,3 +11,6 @@ package:
   exclude:
     - Dockerfile
     - docker-compose.yml
+
+functions:
+  slack:
