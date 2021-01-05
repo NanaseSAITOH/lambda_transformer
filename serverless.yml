@@ -3,6 +3,7 @@ provider:
   name: aws
   region: us-east-2
   timeout: 120
+  stage: prod
 
   environment:
     SLACK_WEBHOOK: ${env:SLACK_WEBHOOK}
@@ -14,3 +15,6 @@ package:
 
 functions:
   slack:
+    handler: src/index.post
+    description: "Post message to Slack"
+    timeout: 60
