@@ -43,30 +43,6 @@ class PredictTaskExecutor:
         # print(trg)
         return translated_sentence
 
-    def predict_task_executor(dataset):
-        encode_sentence = "うわ 昨日頼もうとしてた机、寝落ちしてポチり損ねた結果1/6以降になっちゃった 年内に届くはずが……"
-
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        # 損失関数の設定
-        criterion = nn.CrossEntropyLoss()
-        # nn.LogSoftmax()を計算してからnn.NLLLoss(negative log likelihood loss)を計算
-        model = Transformer(words_num=len(dataset['words']))
-        optim = torch.optim.Adam(model.parameters(), lr=0.0001,
-                                 betas=(0.9, 0.98), eps=1e-9)
-        model = model.cuda() if torch.cuda.is_available() else model.cpu()
-        model_path = "learnning_model/Model/checkpoint_best_epoch_75_best.pt"
-        model.load_state_dict(torch.load(
-            model_path, map_location=torch.device('cpu')))
-        #train(model, optim, 25)
-        mSentenceFormatter = SentenceFormatter()
-        text_list = mSentenceFormatter.text_to_vector(
-            texts=encode_sentence, datasets=dataset)
-        text_tensor = torch.tensor(text_list).to(device)
-
-        decode_sentence(model, text_tensor, dataset)
-
-        return text_tensor
-
     def main(self, sentence):
         dataset = DataCollector.load_data()
 
