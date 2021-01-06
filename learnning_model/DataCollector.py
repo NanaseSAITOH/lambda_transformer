@@ -12,7 +12,6 @@ import pickle
 class DataCollector:
 
     def load_data():
-        # 単語ファイルロード
         with open('/mnt/lambda/Data/words.pickle', 'rb') as ff:
             words = pickle.load(ff)
 
