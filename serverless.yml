@@ -1,10 +1,8 @@
-service: test_githubactions
+service: transformer-function
 provider:
   name: aws
   region: us-east-2
   timeout: 120
-  role: ${env:AWS_LAMBDA_ROLE_ARN}
-  stage: 
 
   environment:
     SLACK_WEBHOOK: ${env:SLACK_WEBHOOK}
