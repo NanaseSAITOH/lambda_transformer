@@ -3,6 +3,7 @@ provider:
   name: aws
   region: us-east-2
   timeout: 120
+  stage: ${opt:stage, self:custom.defaultStage}
   vpc:
     securityGroupIds:
       - sg-0eff49c601074e8a4 
