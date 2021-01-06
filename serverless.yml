@@ -27,3 +27,7 @@ functions:
     timeout: 60 
     environment:
        PYTHONPATH: "/mnt/lambda"
+    fileSystemConfig:
+      arn: arn:aws:elasticfilesystem:us-east-2:719378226820:access-point/fsap-0fcbf5aa31eba53fe # ARN of EFS Access Point
+      localMountPath: /mnt/lambda # path under which EFS will be mounted and accessible by Lambda function
+
