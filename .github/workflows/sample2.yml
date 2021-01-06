@@ -1,3 +1,5 @@
+# .github/workflows/sample.yml
+
 on:
   push:
     branches:
@@ -21,20 +23,13 @@ jobs:
         run: |
           npm install serverless -g
           npm install
-
       - name: Deploy to Lambda
-        run: sls deploy
+        run: |
+          sls plugin install -n serverless-python-requirements
+          sls deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
-      - name: Execute Lambda
-        run: sls invoke -f slack
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Notify result to slack
         uses: homoluctus/slatify@master
