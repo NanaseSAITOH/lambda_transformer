@@ -3,7 +3,6 @@ provider:
   name: aws
   region: us-east-2
   timeout: 120
-  stage: prod
 
   environment:
     SLACK_WEBHOOK: ${env:SLACK_WEBHOOK}
