@@ -1,11 +1,6 @@
-import torch.optim as optim
 from torch.autograd import Variable
 from learnning_model.Transformer import Transformer
-from torch import Tensor
-from typing import Optional
-from torch.nn import init
 import torch
-import torch.nn as nn
 from learnning_model.DataCollector import DataCollector
 from learnning_model.SentenceFormatter import SentenceFormatter
 
