@@ -45,7 +45,7 @@ class PredictTaskExecutor:
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         # 損失関数の設定
-        criterion = nn.CrossEntropyLoss()
+        criterion = torch.nn.CrossEntropyLoss()
         # nn.LogSoftmax()を計算してからnn.NLLLoss(negative log likelihood loss)を計算
         model = Transformer(words_num=len(dataset['words']))
         model = model.cuda() if torch.cuda.is_available() else model.cpu()
