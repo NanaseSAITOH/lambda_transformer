@@ -1,4 +1,4 @@
-service: transformer-function
+service: kusoripu-function
 provider:
   name: aws
   region: us-east-2
@@ -13,8 +13,8 @@ package:
     - docker-compose.yml
 
 functions:
-  slack:
+  transformer:
     runtime: python3.7
     handler: lambda_function.lambda_handler
-    description: "Post message to Slack"
+    description: "対話モデルAPI"
     timeout: 60 
