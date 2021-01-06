@@ -1,4 +1,4 @@
-service: kusoripu-function
+service: kusoripu-transformer
 provider:
   name: aws
   region: us-east-2
@@ -20,7 +20,7 @@ package:
     - docker-compose.yml
 
 functions:
-  transformer:
+  api:
     runtime: python3.7
     handler: lambda_function.lambda_handler
     description: "対話モデルAPI"
