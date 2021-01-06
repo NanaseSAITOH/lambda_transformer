@@ -1,4 +1,4 @@
-# .github/workflows/sample.yml
+# .github/workflows/master.yml
 
 on:
   push:
