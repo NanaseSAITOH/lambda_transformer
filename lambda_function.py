@@ -6,7 +6,8 @@ from learnning_model.PredictTaskExecutor import PredictTaskExecutor
 
 
 def lambda_handler(event, context):
-    if event is None:
+    req_body = json.loads(event['body'])
+    if req_body["detail-type"] == "Scheduled Event":
         return {
             'statusCode': 200,
             'headers': {
@@ -15,7 +16,6 @@ def lambda_handler(event, context):
             },
             'body': ''
         }
-    req_body = json.loads(event['body'])
     sentence = req_body['text']
     predictTaskExecutor = PredictTaskExecutor()
     decode_sentence = predictTaskExecutor.main(sentence)
