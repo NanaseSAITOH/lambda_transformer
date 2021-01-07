@@ -6,7 +6,17 @@ from learnning_model.PredictTaskExecutor import PredictTaskExecutor
 
 
 def lambda_handler(event, context):
-    sentence = event['text']
+    if event is None:
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': ''
+        }
+    req_body = json.loads(event['body'])
+    sentence = req_body['text']
     predictTaskExecutor = PredictTaskExecutor()
     decode_sentence = predictTaskExecutor.main(sentence)
 
