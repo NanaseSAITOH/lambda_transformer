@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import math
-
+MAX_SEQ_LEN = 75
 
 class PositionalEncoding(nn.Module):
     def __init__(self, d_model, dropout=0.1, max_len=75):
@@ -42,7 +42,7 @@ class Embedder(nn.Module):
 class Transformer(nn.Module):
     def __init__(self, d_model: int = 300, nhead: int = 6, num_encoder_layers: int = 4,
                  num_decoder_layers: int = 4, dim_feedforward: int = 1024, dropout: float = 0.1,
-                 activation: str = "relu", target_vocab_length: int = TEXT.vocab.vectors.shape[0]) -> None:
+                 activation: str = "relu", target_vocab_length: int = 0) -> None:
         super(Transformer, self).__init__()
 
         self.source_embedding = nn.Embedding(target_vocab_length, 300)
