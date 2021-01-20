@@ -7,7 +7,8 @@ MAX_SEQ_LEN = 75
 class SentenceFormatter:
 
     def morphological_analysis(self, text):
-        wakati = MeCab.Tagger('-O wakati')
+        wakati = MeCab.Tagger(
+            '-O wakati -r /dev/null -d /mnt/lambda/lib/mecab/dic/ipadic')
         ret = []
         text = self.remove_special_character(text)
         result = wakati.parse(text).split()  # これでスペースで単語が区切られる
