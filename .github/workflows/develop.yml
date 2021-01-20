@@ -1,0 +1,43 @@
+# .github/workflows/develop.yml
+
+on:
+  push:
+    branches:
+      - develop
+
+name: Auto Deploy to AWS Lambda
+
+jobs:
+  deploy:
+    name: Auto Deploy
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - name: Install Dependencies
+        run: |
+          npm install serverless -g
+          npm install
+      - name: Deploy to Lambda
+        run: |
+          sls plugin install -n serverless-python-requirements
+          sls deploy --stage dev
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Notify result to slack
+        uses: homoluctus/slatify@master
+        if: always()
+        with:
+          type: ${{ job.status }}
+          job_name: '*Deploy Lambda*'
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

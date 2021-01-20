@@ -1,0 +1,34 @@
+service: kusoripu-transformer
+provider:
+  name: aws
+  region: us-east-2
+  timeout: 120
+  stage: ${opt:stage, self:custom.defaultStage}
+  vpc:
+    securityGroupIds:
+      - sg-0eff49c601074e8a4 
+    subnetIds:
+      - subnet-cd71aea6
+      - subnet-a4b3cfe8
+      - subnet-7f130705
+
+  environment:
+    SLACK_WEBHOOK: ${env:SLACK_WEBHOOK}
+
+package:
+  exclude:
+    - Dockerfile
+    - docker-compose.yml
+
+functions:
+  api:
+    runtime: python3.7
+    handler: lambda_function.lambda_handler
+    description: "対話モデルAPI"
+    timeout: 60 
+    environment:
+       PYTHONPATH: "/mnt/lambda"
+    fileSystemConfig:
+      arn: arn:aws:elasticfilesystem:us-east-2:719378226820:access-point/fsap-0fcbf5aa31eba53fe # ARN of EFS Access Point
+      localMountPath: /mnt/lambda # path under which EFS will be mounted and accessible by Lambda function
+
