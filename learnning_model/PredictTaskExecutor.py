@@ -30,6 +30,8 @@ class PredictTaskExecutor:
             np_mask = np_mask
             pred = model(src=sentence.transpose(0, 1), tgt=trg, tgt_mask=np_mask)
             add_word = TEXT.itos[pred.argmax(dim=2)[-1].item()]
+            if (add_word == "<eos>"):
+                return translated_sentence
             translated_sentence += " " + add_word
             trg = torch.cat((trg, torch.LongTensor([[pred.argmax(dim=2)[-1]]])))
         return translated_sentence
