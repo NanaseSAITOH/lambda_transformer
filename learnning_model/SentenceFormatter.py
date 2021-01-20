@@ -7,7 +7,7 @@ MAX_SEQ_LEN = 75
 class SentenceFormatter:
 
     def morphological_analysis(self, text):
-        wakati = MeCab.Tagger('-O wakati -r /dev/null -d /mnt/lambda/lib/mecab/dic/ipadic')
+        wakati = MeCab.Tagger('-O wakati')
         ret = []
         text = self.remove_special_character(text)
         result = wakati.parse(text).split()  # これでスペースで単語が区切られる
@@ -36,13 +36,13 @@ class SentenceFormatter:
         texts = self.morphological_analysis(texts)
         mat_urtext = np.zeros((MAX_SEQ_LEN, 1), dtype=int)
         for i in range(0, len(texts)):
-            if texts[i] in TEXT.vocab.stoi:  # 出現頻度の低い単語のインデックスをunkのそれに置き換え
-                mat_urtext[i, 0] = TEXT.vocab.stoi[texts[i]]
+            if texts[i] in TEXT.stoi:  # 出現頻度の低い単語のインデックスをunkのそれに置き換え
+                mat_urtext[i, 0] = TEXT.stoi[texts[i]]
             else:
-                mat_urtext[i, 0] = TEXT.vocab.stoi['<unk>']
+                mat_urtext[i, 0] = TEXT.stoi['<unk>']
                 
         for i in range(len(texts), MAX_SEQ_LEN, 1):
-            mat_urtext[i, 0] = TEXT.vocab.stoi['<pad>']
+            mat_urtext[i, 0] = TEXT.stoi['<pad>']
             
         print(mat_urtext.shape)
         return mat_urtext

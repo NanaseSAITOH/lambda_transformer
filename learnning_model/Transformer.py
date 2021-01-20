@@ -42,7 +42,7 @@ class Embedder(nn.Module):
 class Transformer(nn.Module):
     def __init__(self, d_model: int = 300, nhead: int = 6, num_encoder_layers: int = 4,
                  num_decoder_layers: int = 4, dim_feedforward: int = 1024, dropout: float = 0.1,
-                 activation: str = "relu", target_vocab_length: int = 0) -> None:
+                 activation: str = "relu", target_vocab_length: int = 0, TEXT=None) -> None:
         super(Transformer, self).__init__()
 
         self.source_embedding = nn.Embedding(target_vocab_length, 300)
@@ -72,8 +72,10 @@ class Transformer(nn.Module):
         self.src_key_padding_mask = None
         self.tgt_key_padding_mask = None
 
+        self.TEXT = TEXT
+
     def _generate_square_subsequent_mask(self, src):
-        input_pad = TEXT.vocab.stoi['<pad>']
+        input_pad = self.TEXT.stoi['<pad>']
         mask = (src == input_pad)
         return mask
 
