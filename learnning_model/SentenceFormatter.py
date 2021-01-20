@@ -2,11 +2,12 @@ import re
 import MeCab
 import numpy as np
 
+MAX_SEQ_LEN = 75
 
 class SentenceFormatter:
 
     def morphological_analysis(self, text):
-        wakati = MeCab.Tagger('-O wakati -r /dev/null -d /mnt/lambda/lib/mecab/dic/ipadic')
+        wakati = MeCab.Tagger('-O wakati')
         ret = []
         text = self.remove_special_character(text)
         result = wakati.parse(text).split()  # これでスペースで単語が区切られる
@@ -31,18 +32,17 @@ class SentenceFormatter:
         modified = [word]
         return modified
 
-    def text_to_vector(self, texts, datasets):
-        word_indices = datasets["word2indices"]
+    def text_to_vector(self, texts, TEXT):
         texts = self.morphological_analysis(texts)
-        mat_urtext = np.zeros((75, 1), dtype=int)
+        mat_urtext = np.zeros((MAX_SEQ_LEN, 1), dtype=int)
         for i in range(0, len(texts)):
-            if texts[i] in word_indices:  # 出現頻度の低い単語のインデックスをunkのそれに置き換え
-                mat_urtext[i, 0] = word_indices[texts[i]]
+            if texts[i] in TEXT.stoi:  # 出現頻度の低い単語のインデックスをunkのそれに置き換え
+                mat_urtext[i, 0] = TEXT.stoi[texts[i]]
             else:
-                mat_urtext[i, 0] = word_indices['UNK']
-
-        for i in range(len(texts), 75, 1):
-            mat_urtext[i, 0] = 0
-
+                mat_urtext[i, 0] = TEXT.stoi['<unk>']
+                
+        for i in range(len(texts), MAX_SEQ_LEN, 1):
+            mat_urtext[i, 0] = TEXT.stoi['<pad>']
+            
         print(mat_urtext.shape)
         return mat_urtext
