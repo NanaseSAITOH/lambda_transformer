@@ -40,7 +40,7 @@ class PredictTaskExecutor:
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        with open("/Users/fumiya/Downloads/TEXT_vocab.pickle","rb") as ff:
+        with open("/mnt/lambda/TEXT_vocab.pickle", "rb") as ff:
             TEXT = pickle.load(ff)
 
         # nn.LogSoftmax()を計算してからnn.NLLLoss(negative log likelihood loss)を計算
@@ -48,7 +48,7 @@ class PredictTaskExecutor:
 
         model = model.cuda() if torch.cuda.is_available() else model.cpu()
 
-        model_path = "/Users/fumiya/Downloads/checkpoint_mecab75_nomask.pt"
+        model_path = "/mnt/lambda/checkpoint_mecab75_nomask.pt"
 
         model.load_state_dict(torch.load(
             model_path, map_location=torch.device('cpu')))
