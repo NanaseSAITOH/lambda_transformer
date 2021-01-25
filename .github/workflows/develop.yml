@@ -12,7 +12,9 @@ jobs:
     name: Auto Deploy
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@develop
+      - uses: actions/checkout@v2
+        with:
+          ref: develop
 
       - name: Setup Node.js
         uses: actions/setup-node@v1
@@ -32,7 +34,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Notify result to slack
-        uses: homoluctus/slatify@develop
+        uses: homoluctus/slatify@master
         if: always()
         with:
           type: ${{ job.status }}

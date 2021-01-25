@@ -1,18 +1,12 @@
 import random
 import numpy as numpy
 
-import torch.nn as nn
-import torch.nn.init as init
-import torch.optim as optim
-import torch.nn.functional as F
-
 import pickle
 
 
 class DataCollector:
 
     def load_data():
-        # 単語ファイルロード
         with open('/mnt/lambda/Data/words.pickle', 'rb') as ff:
             words = pickle.load(ff)
 
